@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Generate a simple token (in production, use proper JWT)
-    const token = Buffer.from(`admin:${Date.now()}`).toString('base64')
+    const token = Buffer.from(`admin:${password}:${Date.now()}`).toString('base64')
 
     return NextResponse.json({
       success: true,

@@ -28,7 +28,8 @@ export default function LoginForm() {
 
       if (response.ok) {
         localStorage.setItem('adminToken', data.token)
-        router.push('/admin/dashboard')
+        // Ensure the change is reflected immediately
+        window.location.href = '/admin'
       } else {
         setError(data.error || 'Invalid password')
       }
