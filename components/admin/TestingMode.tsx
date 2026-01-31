@@ -27,7 +27,12 @@ export default function TestingMode() {
     try {
       const response = await fetch('/api/admin/testing-logs')
       const data = await response.json()
-      setLogs(data)
+      if (Array.isArray(data)) {
+        setLogs(data)
+      } else {
+        console.error('[v0] API did not return an array:', data)
+        setLogs([])
+      }
     } catch (error) {
       console.error('[v0] Error fetching testing logs:', error)
     }
