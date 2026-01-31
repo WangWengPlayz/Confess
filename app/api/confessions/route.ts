@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getSupabaseClient } from '@/lib/supabase'
 
-const supabase = getSupabaseClient();
-
 export async function GET(request: NextRequest) {
   try {
     const supabase = getSupabaseClient()
+    if (!supabase) {
+      return NextResponse.json({ error: 'Supabase client not initialized' }, { status: 503 })
+    }
     const searchParams = request.nextUrl.searchParams
     const status = searchParams.get('status') || 'approved'
 
@@ -35,6 +36,9 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const supabase = getSupabaseClient()
+    if (!supabase) {
+      return NextResponse.json({ error: 'Supabase client not initialized' }, { status: 503 })
+    }
     const body = await request.json()
     const { message, author_name, language } = body
 

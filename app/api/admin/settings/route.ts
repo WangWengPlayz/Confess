@@ -4,6 +4,16 @@ import { getSupabaseClient } from '@/lib/supabase'
 export async function GET() {
   try {
     const supabase = getSupabaseClient()
+    if (!supabase) {
+      return NextResponse.json({
+        facebookPageId: null,
+        facebookAccessToken: null,
+        facebookPageName: null,
+        facebookPageLogo: null,
+        moderationEnabled: true,
+        error: 'Supabase client not initialized'
+      }, { status: 503 })
+    }
     const { data, error } = await supabase
       .from('admin_settings')
       .select('*')
@@ -36,6 +46,9 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     const supabase = getSupabaseClient()
+    if (!supabase) {
+      return NextResponse.json({ error: 'Supabase client not initialized' }, { status: 503 })
+    }
     const body = await request.json()
 
     // Check if settings already exist

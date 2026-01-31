@@ -27,7 +27,12 @@ export default function ConfessionManager() {
     try {
       const response = await fetch('/api/admin/confessions')
       const data = await response.json()
-      setConfessions(data)
+      if (Array.isArray(data)) {
+        setConfessions(data)
+      } else {
+        console.error('[v0] API did not return an array:', data)
+        setConfessions([])
+      }
     } catch (error) {
       console.error('[v0] Error fetching confessions:', error)
     } finally {
@@ -73,9 +78,9 @@ export default function ConfessionManager() {
     }
   }
 
-  const filteredConfessions = confessions.filter(c => 
-    filter === 'all' ? true : c.status === filter
-  )
+  const filteredConfessions = Array.isArray(confessions) 
+    ? confessions.filter(c => filter === 'all' ? true : c.status === filter)
+    : []
 
   const getStatusColor = (status: string) => {
     switch (status) {

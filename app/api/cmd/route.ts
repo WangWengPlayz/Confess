@@ -32,6 +32,10 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const supabase = getSupabaseClient()
+    if (!supabase) {
+      console.error('[v0] Supabase client not initialized for webhook')
+      return NextResponse.json({ error: 'Internal server error' }, { status: 503 })
+    }
     const body = await request.json()
 
     // Log incoming message

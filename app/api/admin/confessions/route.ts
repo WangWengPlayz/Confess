@@ -4,6 +4,9 @@ import { getSupabaseClient } from '@/lib/supabase'
 export async function GET() {
   try {
     const supabase = getSupabaseClient()
+    if (!supabase) {
+      return NextResponse.json({ error: 'Supabase client not initialized' }, { status: 503 })
+    }
     const { data, error } = await supabase
       .from('confessions')
       .select('*')

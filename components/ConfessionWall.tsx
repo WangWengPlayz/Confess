@@ -26,7 +26,12 @@ export default function ConfessionWall() {
     try {
       const response = await fetch(`/api/confessions?status=${filter}`)
       const data = await response.json()
-      setConfessions(data)
+      if (Array.isArray(data)) {
+        setConfessions(data)
+      } else {
+        console.error('[v0] API did not return an array:', data)
+        setConfessions([])
+      }
     } catch (error) {
       console.error('[v0] Error fetching confessions:', error)
     } finally {

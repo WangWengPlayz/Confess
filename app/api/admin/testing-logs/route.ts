@@ -4,6 +4,9 @@ import { getSupabaseClient } from '@/lib/supabase'
 export async function GET() {
   try {
     const supabase = getSupabaseClient()
+    if (!supabase) {
+      return NextResponse.json({ error: 'Supabase client not initialized' }, { status: 503 })
+    }
     const { data, error } = await supabase
       .from('testing_logs')
       .select('*')
@@ -25,6 +28,9 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     const supabase = getSupabaseClient()
+    if (!supabase) {
+      return NextResponse.json({ error: 'Supabase client not initialized' }, { status: 503 })
+    }
     const body = await request.json()
 
     const { error } = await supabase
