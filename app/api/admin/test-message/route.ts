@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
         type: 'message_received',
         data: message,
         timestamp: new Date().toISOString()
-      })
+      } as any)
 
     if (logError) throw logError
 
@@ -35,7 +35,7 @@ export async function POST(request: NextRequest) {
         message: message,
         status: 'pending',
         language: 'en'
-      })
+      } as any)
 
     if (confError) throw confError
 

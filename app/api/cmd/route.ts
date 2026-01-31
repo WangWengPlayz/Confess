@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
         type: 'message_received',
         data: JSON.stringify(body),
         timestamp: new Date().toISOString()
-      })
+      } as any)
 
     // Extract message from Facebook's webhook format
     if (body.object === 'page' && body.entry) {
@@ -64,19 +64,19 @@ export async function POST(request: NextRequest) {
                   message: text,
                   status: 'pending',
                   language: 'en'
-                })
+                } as any)
 
               if (error) {
                 console.error('[v0] Error creating confession:', error)
               } else {
                 // Log successful creation
-                await supabase
+                await (supabase as any)
                   .from('testing_logs')
                   .insert({
                     type: 'confession_created',
                     data: `Confession created from sender ${senderId}`,
                     timestamp: new Date().toISOString()
-                  })
+                  } as any)
               }
             }
           }
@@ -91,13 +91,15 @@ export async function POST(request: NextRequest) {
     // Log error
     try {
       const supabase = getSupabaseClient()
-      await supabase
-        .from('testing_logs')
-        .insert({
-          type: 'error',
-          data: String(error),
-          timestamp: new Date().toISOString()
-        })
+      if (supabase) {
+        await supabase
+          .from('testing_logs')
+          .insert({
+            type: 'error',
+            data: String(error),
+            timestamp: new Date().toISOString()
+          } as any)
+      }
     } catch {}
 
     return NextResponse.json(

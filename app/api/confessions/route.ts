@@ -63,8 +63,8 @@ export async function POST(request: NextRequest) {
         author_name: author_name && author_name.trim() ? author_name.trim() : null,
         message: message.trim(),
         status: 'pending',
-        language: language || 'en'
-      })
+        language: (language || 'en') as string
+      } as any)
       .select()
 
     if (error) throw error

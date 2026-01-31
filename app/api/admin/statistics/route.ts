@@ -21,9 +21,9 @@ export async function GET() {
     if (confError) throw confError
 
     const totalConfessions = confessions?.length || 0
-    const approvedConfessions = confessions?.filter(c => c.status === 'approved').length || 0
-    const rejectedConfessions = confessions?.filter(c => c.status === 'rejected').length || 0
-    const pendingConfessions = confessions?.filter(c => c.status === 'pending').length || 0
+    const approvedConfessions = confessions?.filter((c: any) => c.status === 'approved').length || 0
+    const rejectedConfessions = confessions?.filter((c: any) => c.status === 'rejected').length || 0
+    const pendingConfessions = confessions?.filter((c: any) => c.status === 'pending').length || 0
 
     // Get testing logs count as proxy for total messages
     const { data: testLogs, error: logError } = await supabase

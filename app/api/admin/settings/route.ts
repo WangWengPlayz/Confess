@@ -58,10 +58,10 @@ export async function POST(request: NextRequest) {
       .single()
 
     if (existing) {
-      const { error } = await supabase
+      const { error } = await (supabase as any)
         .from('admin_settings')
-        .update(body)
-        .eq('id', existing.id)
+        .update(body as any)
+        .eq('id', (existing as any).id)
 
       if (error) throw error
     } else {

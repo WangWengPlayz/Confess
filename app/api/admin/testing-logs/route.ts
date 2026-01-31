@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
         type: body.type || 'message_received',
         data: JSON.stringify(body.data || body),
         timestamp: new Date().toISOString()
-      })
+      } as any)
 
     if (error) throw error
 
