@@ -5,8 +5,9 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev",
-    "lint": "eslint .",
-    "start": "next start"
+    "lint": "next lint",
+    "start": "next start",
+    "diagnose": "next lint && next build"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
