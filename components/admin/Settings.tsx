@@ -233,10 +233,10 @@ export default function Settings() {
             <p className="text-sm text-muted-foreground mb-2">Webhook Endpoint</p>
             <div className="flex gap-2 items-center">
               <div className="flex-1 bg-background p-3 rounded font-mono text-xs text-foreground border border-border">
-                /api/cmd
+                /webhook
               </div>
               <button
-                onClick={() => copyToClipboard('/api/cmd', 'webhook')}
+                onClick={() => copyToClipboard('/webhook', 'webhook')}
                 className="p-2 hover:bg-background rounded-lg transition-colors"
               >
                 {copied === 'webhook' ? (
@@ -252,10 +252,10 @@ export default function Settings() {
             <p className="text-sm text-muted-foreground mb-2">Verify Token</p>
             <div className="flex gap-2 items-center">
               <div className="flex-1 bg-background p-3 rounded font-mono text-xs text-foreground border border-border">
-                {settings.webhookVerify_token || 'confess_your_love_webhook_token'}
+                {settings.webhookVerify_token || 'I-LOVE-YOU'}
               </div>
               <button
-                onClick={() => copyToClipboard(settings.webhookVerify_token || 'confess_your_love_webhook_token', 'token')}
+                onClick={() => copyToClipboard(settings.webhookVerify_token || 'I-LOVE-YOU', 'token')}
                 className="p-2 hover:bg-background rounded-lg transition-colors"
               >
                 {copied === 'token' ? (

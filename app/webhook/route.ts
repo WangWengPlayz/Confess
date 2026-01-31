@@ -15,7 +15,7 @@ export async function GET(request: NextRequest) {
       .select('webhook_verify_token')
       .single()
 
-    const VERIFY_TOKEN = (settings as any)?.webhook_verify_token || process.env.WEBHOOK_VERIFY_TOKEN || 'confess_your_love_webhook_token'
+    const VERIFY_TOKEN = (settings as any)?.webhook_verify_token || process.env.WEBHOOK_VERIFY_TOKEN || 'I-LOVE-YOU'
 
     const searchParams = request.nextUrl.searchParams
     const mode = searchParams.get('hub.mode')
