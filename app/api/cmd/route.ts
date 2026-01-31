@@ -1,11 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getSupabaseClient } from '@/lib/supabase'
 
-const VERIFY_TOKEN = process.env.WEBHOOK_VERIFY_TOKEN || 'confess_your_love_webhook_token'
-
 // Handle webhook verification from Facebook
 export async function GET(request: NextRequest) {
   try {
+    const supabase = getSupabaseClient()
+    if (!supabase) {
+      return NextResponse.json({ error: 'Supabase client not initialized' }, { status: 503 })
+    }
+
+    // Fetch verify token from settings
+    const { data: settings } = await supabase
+      .from('admin_settings')
+      .select('webhook_verify_token')
+      .single()
+
+    const VERIFY_TOKEN = (settings as any)?.webhook_verify_token || process.env.WEBHOOK_VERIFY_TOKEN || 'confess_your_love_webhook_token'
+
     const searchParams = request.nextUrl.searchParams
     const mode = searchParams.get('hub.mode')
     const token = searchParams.get('hub.verify_token')

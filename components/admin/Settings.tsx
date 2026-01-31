@@ -8,6 +8,7 @@ interface AdminSettings {
   facebookAccessToken: string | null
   facebookPageName: string | null
   facebookPageLogo: string | null
+  webhookVerify_token: string | null
   moderationEnabled: boolean
 }
 
@@ -17,6 +18,7 @@ export default function Settings() {
     facebookAccessToken: '',
     facebookPageName: '',
     facebookPageLogo: '',
+    webhookVerify_token: '',
     moderationEnabled: true
   })
   const [loading, setLoading] = useState(true)
@@ -171,6 +173,37 @@ export default function Settings() {
               </div>
             )}
           </div>
+
+          {/* Webhook Verify Token */}
+          <div>
+            <label className="block text-sm font-medium text-foreground mb-2">
+              Webhook Verify Token
+            </label>
+            <div className="flex gap-2">
+              <input
+                type="text"
+                value={settings.webhookVerify_token || ''}
+                onChange={(e) => setSettings({ ...settings, webhookVerify_token: e.target.value })}
+                placeholder="Enter your custom verify token"
+                className="flex-1 px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary bg-background text-foreground placeholder-muted-foreground"
+              />
+              {settings.webhookVerify_token && (
+                <button
+                  onClick={() => copyToClipboard(settings.webhookVerify_token!, 'verifyToken')}
+                  className="p-2 hover:bg-muted rounded-lg transition-colors"
+                >
+                  {copied === 'verifyToken' ? (
+                    <Check className="w-5 h-5 text-green-600" />
+                  ) : (
+                    <Copy className="w-5 h-5 text-foreground" />
+                  )}
+                </button>
+              )}
+            </div>
+            <p className="text-xs text-muted-foreground mt-2">
+              This token must match the one you provide in the Facebook Developer Portal.
+            </p>
+          </div>
         </div>
       </div>
 
@@ -219,10 +252,10 @@ export default function Settings() {
             <p className="text-sm text-muted-foreground mb-2">Verify Token</p>
             <div className="flex gap-2 items-center">
               <div className="flex-1 bg-background p-3 rounded font-mono text-xs text-foreground border border-border">
-                confess_your_love_webhook_token
+                {settings.webhookVerify_token || 'confess_your_love_webhook_token'}
               </div>
               <button
-                onClick={() => copyToClipboard('confess_your_love_webhook_token', 'token')}
+                onClick={() => copyToClipboard(settings.webhookVerify_token || 'confess_your_love_webhook_token', 'token')}
                 className="p-2 hover:bg-background rounded-lg transition-colors"
               >
                 {copied === 'token' ? (
